@@ -57,15 +57,15 @@ function More() {
 
     const moreCalcul = () =>{
         if (moreOper === "+"){
-            setmoreResult(parseInt(moreFirst)+parseInt(moreSecond))      
+            setmoreResult(parseFloat(moreFirst)+parseFloat(moreSecond))      
           }else if(moreOper === "-"){
-            setmoreResult(parseInt(moreFirst)-parseInt(moreSecond))     
+            setmoreResult(parseFloat(moreFirst)-parseFloat(moreSecond))     
           }else if(moreOper === "*"){
-            setmoreResult(parseInt(moreFirst)*parseInt(moreSecond))     
+            setmoreResult(parseFloat(moreFirst)*parseFloat(moreSecond))  
           }else if(moreOper === "/"){
-            setmoreResult(parseInt(moreFirst)/parseInt(moreSecond))     
+            setmoreResult(parseFloat(moreFirst)/parseFloat(moreSecond))     
           }else if(moreOper === "%"){
-            setmoreResult(parseInt(moreFirst)%parseInt(moreSecond))    
+            setmoreResult(parseFloat(moreFirst)%parseFloat(moreSecond))    
           }
     }
 
@@ -82,10 +82,9 @@ function More() {
           setmoreResult("");
   }
   const minus = () => {
-    console.log(!moreFirst.includes("-") );
     if(!moreOper){
       
-      if(!moreFirst.includes("-")){
+      if(!String(moreFirst).includes("-")){
         setmoreFirst("-"+String(moreFirst))
       }else{
         setmoreFirst(String(moreFirst).slice(1))
@@ -95,7 +94,22 @@ function More() {
   }
 
   const point = () => {
-    
+    if(!moreOper){
+      if(typeof(moreFirst)==="number"){
+          setmoreFirst(
+              String(moreFirst).concat(".")
+          )
+      }else{
+          setmoreFirst(
+              moreFirst.concat(".")
+          )
+      }
+      
+  }else{
+      setmoreSecond(
+          moreSecond.concat(".")
+      )
+  }
   }
 
  
