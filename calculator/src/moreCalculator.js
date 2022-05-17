@@ -19,7 +19,7 @@ import React, { useState, useEffect } from 'react';
 // oper와 두번째 값을 초기화 시키기?
 
 function More() {
-  const [moreFirst, setmoreFirst] = useState("");
+  const [moreFirst, setmoreFirst] = useState(0);
   const [moreOper, setmoreOper] = useState();
   const [moreSecond, setmoreSecond] = useState("");
   const [moreresult, setmoreResult] = useState("");
@@ -30,7 +30,7 @@ function More() {
       [7, 8, 9 , "*"],
       [4, 5, 6, "-"],
       [1, 2, 3, "+"],
-      [ '',0, ".", "="]
+      [0, ".", "="]
     ]
  
 
@@ -81,9 +81,7 @@ function More() {
           setmoreSecond("");
           setmoreResult("");
   }
-  const minus = () => {
-
-  }
+  // 
 
  
 
@@ -107,7 +105,9 @@ function More() {
 			case(38) : // Up
 				if(idx < cols){
 					return false;      
-				}else{
+				}else if(idx===total-1 || idx===(total-2)){
+          document.querySelectorAll('ul li button')[idx-3].focus();
+        }else{
 					document.querySelectorAll('ul li button')[idx-cols].focus();
 				} 
 				break;
@@ -120,9 +120,12 @@ function More() {
 				break;
 
 			case (40) : // Down
-				if(idx+cols >= total){
+				if(idx+3 >= total){
 					return false;         
-				}else{
+				}else if(idx===(total-6)|| idx===(total-5) || idx===(total-4)){
+          document.querySelectorAll('ul li button')[idx+3].focus();
+        }
+        else{
 					document.querySelectorAll('ul li button')[idx+cols].focus();
 				}
 				break;
@@ -140,7 +143,8 @@ function More() {
       <span>{moreOper}</span>
       <span>{moreSecond}</span>
         <br />
-      <button onClick={(e)=>clickNum(e)} value="0" /*onKeyDown={(e)=>{if(e.key === 'Enter') {clickNum(e)}}}*/>0</button>
+        {/* 단순 버튼 나열
+      <button onClick={(e)=>clickNum(e)} value="0" onKeyDown={(e)=>{if(e.key === 'Enter') {clickNum(e)}}}>0</button>
       <button onClick={(e)=>clickNum(e)} value="1">1</button>
       <button onClick={(e)=>clickNum(e)} value="2">2</button>
       <button onClick={(e)=>clickNum(e)} value="3">3</button>
@@ -160,10 +164,11 @@ function More() {
       <button onClick={moreCalcul}>=</button>
       <button onClick={reset}>ac</button>
       <button onClick={minus}>+/-</button>
+      */}
       {
         numArray.map( (o,i) => <ul key={i}><li>
           {
-            o.map((k,ii)=> <button key={ii} value={k} onClick={(e) =>
+            o.map((k,ii)=> <button key={ii} value={k} id={k} onClick={(e) =>
               {if(typeof(k)== "number") {
                 clickNum(e)
               }else if(k==="+" || k==="-" || k==="*" || k ==="/" || k ==="%") {
@@ -172,6 +177,8 @@ function More() {
                 reset();
               }else if(k==="="){
                 moreCalcul();
+              }else if(k==="+/-"){
+                minus();
               }
           }
             }>{k}</button>)

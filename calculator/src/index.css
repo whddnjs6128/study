@@ -10,7 +10,19 @@ ul li{
   list-style-type: none;
 }
 
+button{
+  margin-right: 5px;
+  width: 30px;
+}
+ul:last-of-type li button:first-of-type{
+  width: 65px;
+}
+.more span:first-of-type{
+  margin-left: 50px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
