@@ -19,7 +19,7 @@ import React, { useState, useEffect } from 'react';
 // oper와 두번째 값을 초기화 시키기?
 
 function More() {
-  const [moreFirst, setmoreFirst] = useState(0);
+  const [moreFirst, setmoreFirst] = useState("");
   const [moreOper, setmoreOper] = useState();
   const [moreSecond, setmoreSecond] = useState("");
   const [moreresult, setmoreResult] = useState("");
@@ -81,7 +81,22 @@ function More() {
           setmoreSecond("");
           setmoreResult("");
   }
-  // 
+  const minus = () => {
+    console.log(!moreFirst.includes("-") );
+    if(!moreOper){
+      
+      if(!moreFirst.includes("-")){
+        setmoreFirst("-"+String(moreFirst))
+      }else{
+        setmoreFirst(String(moreFirst).slice(1))
+
+      }      
+  }
+  }
+
+  const point = () => {
+    
+  }
 
  
 
@@ -179,6 +194,8 @@ function More() {
                 moreCalcul();
               }else if(k==="+/-"){
                 minus();
+              }else if(k==="."){
+                point();
               }
           }
             }>{k}</button>)
