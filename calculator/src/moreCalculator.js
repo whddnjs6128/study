@@ -30,7 +30,7 @@ function More() {
       [7, 8, 9 , "*"],
       [4, 5, 6, "-"],
       [1, 2, 3, "+"],
-      ["", 0, ".", "="]
+      [ '',0, ".", "="]
     ]
  
 
@@ -85,8 +85,57 @@ function More() {
 
   }
 
+ 
+
+  function keyevent(e) {
+		const keycode = e.keyCode;
+    const buttons = document.querySelectorAll("ul li button");
+    const total = buttons.length;
+
+    const cols = 4;
+		const idx = Array.from(document.querySelectorAll('ul li button')).indexOf(e.target);
+
+		switch (keycode) {
+			
+			case(37) : // Left
+				if(idx===0){
+					return false;      
+				}else{  
+					document.querySelectorAll('ul li button')[idx-1].focus();
+				}
+				break;
+			case(38) : // Up
+				if(idx < cols){
+					return false;      
+				}else{
+					document.querySelectorAll('ul li button')[idx-cols].focus();
+				} 
+				break;
+			case(39) : // Right
+				if(idx===(total-1)){ 
+					return false;      
+				}else{      
+					document.querySelectorAll('ul li button')[idx+1].focus();
+				} 
+				break;
+
+			case (40) : // Down
+				if(idx+cols >= total){
+					return false;         
+				}else{
+					document.querySelectorAll('ul li button')[idx+cols].focus();
+				}
+				break;
+
+			default : 
+				return false;
+				break;
+		}
+	}
+
+  // keyevent();
   return (
-    <div className="more">
+    <div className="more" onKeyDown={(e)=>keyevent(e)}>
       <span>{moreFirst}</span>
       <span>{moreOper}</span>
       <span>{moreSecond}</span>
@@ -114,7 +163,18 @@ function More() {
       {
         numArray.map( (o,i) => <ul key={i}><li>
           {
-            o.map((k,ii)=> <button key={ii} value={k} onClick={(e) => (typeof(k)==Number? (e)=>clickNum(e) :setmoreOper(e.target.value))}>{k}</button>)
+            o.map((k,ii)=> <button key={ii} value={k} onClick={(e) =>
+              {if(typeof(k)== "number") {
+                clickNum(e)
+              }else if(k==="+" || k==="-" || k==="*" || k ==="/" || k ==="%") {
+                setmoreOper(e.target.value)
+              }else if(k==="ac"){
+                reset();
+              }else if(k==="="){
+                moreCalcul();
+              }
+          }
+            }>{k}</button>)
           }
        </li></ul>)
       }
